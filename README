@@ -1,0 +1,77 @@
+Radu Cosmin
+313 CB
+
+Tema 3 - HTML
+
+Pentru o claritate mai buna a codului, l-am impartit in 8 fisiere .c:
+- main.c - contine main-ul programului si functiile pentru constructia
+arborelui
+- fcoada.c - contine functiile pentru prelucrarea cozilor;
+- functii.c - restul functiilor pentru realizarea cerintelor;
+- format.c - functiile pentru printarea arborelui;
+- aux.c - functiile trimise ca pointeri pentru ultimele doua cerinte(Override
+style si Append to style) si alte functii auxiliare, cum ar fi cea de cautare
+a unui tag dup id;
+- delete.c - contine functiile pentru eliberarea memoriei ocupate de arbore
+ sau a de un subarbore (stergere recursiva)
+- style.c - functiile pentru ultimele doua cerinte
+- interpret.c - contine functia pentru interpretarea codului in limbaj html.
+
+De asemenea, am urmatoarele fisiere header:
+- lib.h - contine structurile utiliate in rezolvarea cerintelor si antetele
+functiilor principale;
+- delete.h - contine antetele functiilor pentru eliminarea diverselor
+informatii ale unui nod;
+- aux.h - contine antetele functiilor trimise ca pointeri functiilor utilizate
+la rezolvarea ultimelor 3 cerinte;
+- style.h - contine antetele functiilor trim si a celei de stergere a spatiilor.
+
+Pentru a citi numele fisierelor date ca parametru am folosit parametrii liniei
+de comanda, argc si argv.
+
+La structura unui nod am adaugat si campul parent ce retine parintele nodului
+curent.
+
+Pentru inceput am format arborele utilizand functia de interpretare si citind
+caracter cu caracter. In functie de stari am adaugat caractere la variabilele
+ce retineau content-ul, tipul etc. Pentru style si celelalte atribute am
+creat cate o functie ce creaza o lista de atribute. In cazul style faceam
+strtok cu delimitatorii : si ; pentru aflarea numelui si a valorii fiecarui
+atribut de introdus in lista, iar pentru alte atribute adaugam atributele
+in lista pe masura ce le descopeream. In momentul terminarii de format al
+tipului, leg nodul la arbore utilizand o variabila nod curent ce retine un
+pointer la nodul creat anterior. In momentul inchiderii unui tag, nod curent
+este setat la parintele acestuia.
+
+Pentru functia de format, am parcurs arborele in adancime si am printat
+tipul, atributele si content-ul acestuia, daca avea. Daca era selfClosing, in
+loc sa inchid tag-ul afisam la final "/>" in loc de ">". Pentru a stabili
+cate tab-uri am de printat am folosit o variabila niv ce retinea nivelul pe
+care se afla un anumit nod.
+
+La functia add, am construit o functie ce cauta dupa id, utilizata si ulterior.
+Functia cauta dupa id folosind bucati ale acestuia. Spre exemplu: daca id-ul
+cautat era 2.2.2 intai cauta nodul cu id-ul 2, iar daca era gasit se cobora
+la copii acestora, apoi dupa 2.2 etc. Daca era gasit nodul, nodul de inserat
+se lega la finalul listei de frati a primului copil al celui cu id-ul cautat
+sau la campul firstChild.
+
+Pentru fiecare din ultimele 3 functii, am, in primul rand, o functie ce
+determina tipul de selector utilizat de functii. Pentru fiecare tip de
+selector, cu exceptia celui pentru id, am creat cate o functie ce determina
+daca un nod respecta conditia impusa de un selector. Am parcurs la aceste
+functii arborele in latime utilizand o coada.
+
+La delete recursiv am creat o functie ce distruge subarborele nod-ului de
+eliminat recursiv. Conditia de oprire a functiei era fie daca un nod nu mai
+avea copii, frati si parinte sau daca un nod nu mai avea frati si copii.
+
+Pentru functia de override distrugeam lista de atribute de tip style si cream
+o noua lista cu atributele date ca parametru functiei. Iar pentru functia de
+append, verificam pentru fiecare atribut daca exista deja unul cu acelasi
+nume in lista si ii schimbam valoarea in caz afirmativ, iar daca nu exista,
+alocam o noua celula pentru acesta pe care o legam la finalul listei.
+
+Pentru compilare se foloseste comanda make sau make build.
+
+Pe checker-ul local am obtinut 85 de puncte si pe cele 20 bonus.
